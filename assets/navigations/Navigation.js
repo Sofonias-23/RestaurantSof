@@ -7,20 +7,62 @@ import FavoritesStack from './FavoritesStack'
 import TopRestaurantsStack from './TopRestaurantsStack'
 import SearchStack from './SearchStack'
 import AccountStack from './AccountStack'
+import { Icon } from 'react-native-elements'
 
 const Tab=createBottomTabNavigator()
 //colocamos el titulo para cada uno , atravez de los stack 
 export default function Navigation() {
+
+  const screenOptions=(route, color) =>{
+    let iconName
+    switch (route.name) {
+      case "restaurants":
+        iconName="google-maps"
+        break;
+        case "favorite":
+        iconName="heart"
+        break;
+        case "Top":
+        iconName="hexagram"
+        break;
+          case "Busquedas":
+        iconName="crosshairs"
+        break;
+       case "Cuenta":
+        iconName="account-lock"
+        break;
+      default:
+        break;
+    }
+    return(
+      <Icon
+      type="material-community"
+      name={iconName}
+      size={22}
+      color={color}
+
+      />
+    )
+  }
     return (
       <NavigationContainer>
-          <Tab.Navigator>
+          <Tab.Navigator
+          initialRouteName="restaurants"
+          tabBarOptions={{
+            inactiveTintColor:"#202020",
+            activeTintColor:"#7c7c7c"
+          }}
+          screenOptions={({route})=>({
+            tabBarIcon :({color})=>screenOptions(route,color)
+          })}
+          >
            <Tab.Screen
-            name="restaurantes"
+            name="restaurants"
             component={RestaurantsStack}
             options={{title:"Restaurantes"}}
            />
             <Tab.Screen
-            name="favoritos"
+            name="favorite"
             component={FavoritesStack}
             options={{title:"Favoritos"}}
            />
